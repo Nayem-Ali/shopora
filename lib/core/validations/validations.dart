@@ -8,7 +8,7 @@ class Validations {
   static String? nameValidator(String? name) {
     if (name!.trim().isEmpty) {
       return "Enter Name";
-    } else if (!fullNameRegex.hasMatch(name)) {
+    } else if (!fullNameRegex.hasMatch(name.trim())) {
       return "Name must be between 2-99 characters, only letters and optional periods.";
     } else {
       return null;

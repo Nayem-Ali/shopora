@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:shopora/core/routes/routes.dart';
 import 'package:shopora/core/validations/validations.dart';
 import 'package:shopora/features/customer/controller/auth_controller.dart';
-import 'package:shopora/features/shared/view/dummy_home.dart';
 import 'package:shopora/features/widgets/app_logo.dart';
 import 'package:shopora/features/widgets/k_elevated_button.dart';
 import 'package:shopora/features/widgets/k_outlined_button.dart';
@@ -69,7 +68,7 @@ class _SignInPageState extends State<SignInPage> {
                         );
                         if(response != null){
                           EasyLoading.showSuccess("Welcome to Shopora ${response.user!.email}");
-                          Get.offAll(DummyHome());
+                          Get.offAllNamed(AppRoutes.customerHome);
                         }
                       }
                     },

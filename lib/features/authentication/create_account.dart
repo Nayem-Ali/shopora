@@ -1,10 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:shopora/core/constants/asset_paths.dart';
 import 'package:shopora/core/routes/routes.dart';
+import 'package:shopora/core/utils/file_handling.dart';
 import 'package:shopora/core/validations/validations.dart';
 import 'package:shopora/features/customer/controller/auth_controller.dart';
+import 'package:shopora/features/customer/controller/profile_controller.dart';
 import 'package:shopora/features/customer/model/customer_model.dart';
 import 'package:shopora/features/widgets/app_logo.dart';
 import 'package:shopora/features/widgets/k_elevated_button.dart';
@@ -26,6 +31,7 @@ class _CreateAccountState extends State<CreateAccount> {
   TextEditingController contact = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  File? profilePicture;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +45,34 @@ class _CreateAccountState extends State<CreateAccount> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  AppLogo(),
+                  Container(
+                    height: Get.height * 0.2,
+                    width: Get.height * 0.2,
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(5),
+                      child:
+                          profilePicture == null
+                              ? Image.asset(AssetsPath.appLogo, fit: BoxFit.fill)
+                              : Image.file(profilePicture!, fit: BoxFit.fill),
+                    ),
+                  ),
+
+                  Container(
+                    width: Get.height * 0.2,
+                    height: Get.height * 0.06,
+                    padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        profilePicture = await FileHandling.pickImage();
+                        setState(() {});
+                      },
+                      child: const Text("Select Image"),
+                    ),
+                  ),
                   KTextFormField(
                     controller: name,
                     prefixIcon: Icon(Icons.person),
@@ -74,15 +107,31 @@ class _CreateAccountState extends State<CreateAccount> {
                   SizedBox(height: 10),
                   KElevatedButton(
                     onPressed: () async {
-                      if (formKey.currentState!.validate()) {
+                      if (profilePicture == null) {
+                        EasyLoading.showInfo("Please Select a Profile Picture");
+                      } else if (formKey.currentState!.validate()) {
                         AuthResponse? response = await AuthController.signUp(
                           email: email.text.trim(),
                           password: password.text.trim(),
                         );
-                        if(response != null){
-                          EasyLoading.showInfo("Account Created Successfully.");
+                        if (response != null) {
+                          String? imageUrl = await FileHandling.uploadProfilePicture(
+                            profilePicture!,
+                            response.user!.email!,
+                          );
+                          print(imageUrl);
+                          Customer customer = Customer(
+                            id: response.user!.id,
+                            name: name.text.trim(),
+                            email: email.text.trim(),
+                            address: address.text.trim(),
+                            image_url: imageUrl ?? "",
+                            contact: contact.text.trim(),
+                          );
+                          await ProfileController.addUserData(customer: customer);
+                          Get.offAllNamed(AppRoutes.signIn);
+                          // EasyLoading.showInfo("Account Created Successfully.");
                         }
-                        // Customer customer = Customer();
                       }
                     },
                     text: "Create Account",

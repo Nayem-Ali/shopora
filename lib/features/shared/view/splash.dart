@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shopora/core/routes/routes.dart';
-import 'package:shopora/features/shared/view/dummy_home.dart';
 import 'package:shopora/features/widgets/app_logo.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -27,7 +26,7 @@ class _SplashState extends State<Splash> {
     } else {
       User? user = supabase.auth.currentUser;
       //TODO: Extract user role and redirect to admin or customer pages
-      Get.offAll(DummyHome());
+      Get.offAllNamed(AppRoutes.customerHome);
     }
   }
 
