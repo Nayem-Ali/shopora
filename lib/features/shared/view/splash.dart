@@ -26,7 +26,11 @@ class _SplashState extends State<Splash> {
     } else {
       User? user = supabase.auth.currentUser;
       //TODO: Extract user role and redirect to admin or customer pages
-      Get.offAllNamed(AppRoutes.customerHome);
+      if (user!.email! == "samiajannatproject@gmail.com") {
+        Get.offAllNamed(AppRoutes.adminHome);
+      } else {
+        Get.offAllNamed(AppRoutes.customerHome);
+      }
     }
   }
 

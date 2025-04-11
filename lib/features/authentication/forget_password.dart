@@ -71,7 +71,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     text: "Sent Link",
                   ),
                   SizedBox(height: 10),
-                  KOutlinedButton(onPressed: () => Get.back(), text: "Get Back"),
+                  KOutlinedButton(onPressed: () => Get.offNamed(AppRoutes.signIn), text: "Get Back"),
                 ],
               ),
             ),

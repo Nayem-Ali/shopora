@@ -68,7 +68,11 @@ class _SignInPageState extends State<SignInPage> {
                         );
                         if(response != null){
                           EasyLoading.showSuccess("Welcome to Shopora ${response.user!.email}");
-                          Get.offAllNamed(AppRoutes.customerHome);
+                          if (response.user!.email == "samiajannatproject@gmail.com") {
+                            Get.offAllNamed(AppRoutes.adminHome);
+                          } else {
+                            Get.offAllNamed(AppRoutes.customerHome);
+                          }
                         }
                       }
                     },

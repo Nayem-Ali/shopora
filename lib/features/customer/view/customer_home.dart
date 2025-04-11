@@ -27,7 +27,7 @@ class _CustomerHomeState extends State<CustomerHome> {
     final supabase = Supabase.instance.client;
     customer = await ProfileController.fetchUserData(userId: supabase.auth.currentUser!.id);
     pages.add(ExploreProduct());
-    pages.add(Cart());
+    pages.add(ViewCart(customer: customer!));
     pages.add(ViewProfile(customer: customer!));
     setState(() {});
   }
