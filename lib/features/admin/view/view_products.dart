@@ -90,7 +90,7 @@ class _ViewProductsState extends State<ViewProducts> {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        if (product.discountPrice == null || product.discountPrice == 0)
+                        if (product.discountPrice == null && product.discountPrice == 0)
                           Text(
                             "${product.price} TK Only",
                             style: Theme.of(context).textTheme.titleMedium?.copyWith(

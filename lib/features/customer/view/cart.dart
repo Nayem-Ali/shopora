@@ -80,8 +80,7 @@ class _ViewCartState extends State<ViewCart> {
                                           fit: BoxFit.fill,
                                         ),
                                       ),
-                                      if (product.discountPrice != null ||
-                                          product.discountPrice != 0)
+                                      if (product.discountPrice != null && product.discountPrice != 0)
                                         Align(
                                           alignment: Alignment.topRight,
                                           child: Container(
@@ -117,7 +116,7 @@ class _ViewCartState extends State<ViewCart> {
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ),
-                                if (product.discountPrice == null || product.discountPrice == 0)
+                                if (product.discountPrice == null && product.discountPrice == 0)
                                   Text(
                                     "${product.price} TK Only",
                                     style: Theme.of(context).textTheme.titleMedium?.copyWith(

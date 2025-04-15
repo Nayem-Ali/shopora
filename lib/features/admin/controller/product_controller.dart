@@ -50,6 +50,18 @@ class ProductController {
     return false;
   }
 
+  static Future<List<String>> fetchAllCategories() async {
+    List<String> categories = [];
+    try {
+      final response = await _supabase.from("products").select("category");
+      categories = response.map((e) => e['category'].toString()).toList();
+      return categories;
+    } catch (error) {
+      EasyLoading.showError(error.toString());
+    }
+    return categories;
+  }
+
   static Future addImages({required List<ProductImage> productImages}) async {
     try {
       final List<Future> addImages = [];

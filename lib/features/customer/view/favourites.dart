@@ -71,7 +71,7 @@ class _FavouritesState extends State<Favourites> {
                                     fit: BoxFit.fill,
                                   ),
                                 ),
-                                if (product.discountPrice != null || product.discountPrice != 0)
+                                if (product.discountPrice != null && product.discountPrice != 0)
                                   Align(
                                     alignment: Alignment.topRight,
                                     child: Container(
@@ -105,7 +105,7 @@ class _FavouritesState extends State<Favourites> {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          if (product.discountPrice == null || product.discountPrice == 0)
+                          if (product.discountPrice == null && product.discountPrice == 0)
                             Text(
                               "${product.price} TK Only",
                               style: Theme.of(context).textTheme.titleMedium?.copyWith(
