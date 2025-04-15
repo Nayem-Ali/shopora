@@ -23,7 +23,7 @@ class AppRoutes {
     GetPage(name: createAccount, page: () => const CreateAccount()),
     GetPage(name: forgetPassword, page: () => const ForgetPassword()),
     GetPage(name: updatePassword, page: () => const UpdatePassword()),
-    GetPage(name: customerHome, page: () => const CustomerHome()),
+    GetPage(name: customerHome, page: () => const CustomerHome(currentIndex: 0)),
     GetPage(name: adminHome, page: () => const AdminHome()),
   ];
 }

@@ -67,8 +67,8 @@ class _ViewCartState extends State<ViewCart> {
                               children: [
                                 ClipRRect(
                                   borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    topRight: Radius.circular(10),
+                                    topLeft: Radius.circular(5),
+                                    topRight: Radius.circular(5),
                                   ),
                                   child: Stack(
                                     children: [
@@ -141,8 +141,6 @@ class _ViewCartState extends State<ViewCart> {
                           ),
                         ),
                       );
-                    } else {
-                      return Center(child: Text("No Favorite Product Found"));
                     }
                   },
                 ),

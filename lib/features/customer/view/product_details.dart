@@ -6,6 +6,7 @@ import 'package:shopora/core/validations/validations.dart';
 import 'package:shopora/features/admin/controller/product_controller.dart';
 import 'package:shopora/features/admin/model/cart_model.dart';
 import 'package:shopora/features/admin/model/product_model.dart';
+import 'package:shopora/features/customer/view/customer_home.dart';
 import 'package:shopora/features/widgets/k_text_form_field.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
@@ -79,7 +80,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   }
                   productImages = snapshot.data ?? [];
                   return SizedBox(
-                    height: Get.height * 0.27,
+                    height: Get.height * 0.5,
                     child: Stack(
                       children: [
                         ClipRRect(
@@ -189,7 +190,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       );
                       if (isFavourite) {
                         await ProductController.removeFromFavourite(cart: cart);
-                        Get.offNamed(AppRoutes.customerHome);
+                        Get.off(CustomerHome(currentIndex: 2));
                       } else {
                         await ProductController.addToFavourite(cart: cart);
                       }
@@ -209,7 +210,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       );
                       if (isCart) {
                         await ProductController.removeFromCart(cart: cart);
-                        Get.offNamed(AppRoutes.customerHome);
+                        Get.off(CustomerHome(currentIndex: 1));
                       } else {
                         await ProductController.addToCart(cart: cart);
                       }

@@ -9,8 +9,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'explore_product.dart';
 
 class CustomerHome extends StatefulWidget {
-  const CustomerHome({super.key});
-
+  const CustomerHome({super.key, required this.currentIndex});
+  final int currentIndex;
   @override
   State<CustomerHome> createState() => _CustomerHomeState();
 }
@@ -25,6 +25,7 @@ class _CustomerHomeState extends State<CustomerHome> {
   }
 
   void fetchCustomerData() async {
+    currentPageIndex = widget.currentIndex;
     final supabase = Supabase.instance.client;
     customer = await ProfileController.fetchUserData(userId: supabase.auth.currentUser!.id);
     pages.add(ExploreProduct());

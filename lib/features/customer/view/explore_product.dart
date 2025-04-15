@@ -62,7 +62,10 @@ class _ExploreProductState extends State<ExploreProduct> {
                             ? Theme.of(context).colorScheme.primaryContainer
                             : Colors.transparent,
                   ),
-                  child: Text(allCategories[index].capitalizeFirst!),
+                  child: Text(
+                    allCategories[index].capitalizeFirst!,
+                    style: Theme.of(context).textTheme.labelLarge,
+                  ),
                 ),
               );
             },
@@ -93,13 +96,13 @@ class _ExploreProductState extends State<ExploreProduct> {
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10),
+                                  topLeft: Radius.circular(5),
+                                  topRight: Radius.circular(5),
                                 ),
                                 child: Stack(
                                   children: [
                                     SizedBox(
-                                      height: 140,
+                                      height: 150,
                                       width: double.maxFinite,
                                       child: CachedNetworkImage(
                                         imageUrl: product.thumbnail,

@@ -39,9 +39,7 @@ class _FavouritesState extends State<Favourites> {
         }
         List<String> favorites =
             (snapshot.data as List).map((e) => e['product_id'].toString()).toList();
-        if (favorites.isEmpty) {
-          return Center(child: Text("No Favorite Product Found"));
-        } else {
+        if (favorites.isNotEmpty) {
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
             itemCount: products.length,
@@ -130,11 +128,11 @@ class _FavouritesState extends State<Favourites> {
                     ),
                   ),
                 );
-              } else {
-                return Center(child: Text("No Favorite Product Found"));
               }
             },
           );
+        } else {
+          return Center(child: Text("No Favorite Product Found ${favorites.isEmpty}"));
         }
       },
     );
