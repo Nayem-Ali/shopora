@@ -36,7 +36,7 @@ class _ViewProfileState extends State<ViewProfile> {
               // mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Personal Informaiton",
+                  "Personal Information",
                   style: TextStyle(decoration: TextDecoration.underline, fontSize: 18),
                 ),
                 SizedBox(height: 5),
@@ -103,22 +103,22 @@ class _ViewProfileState extends State<ViewProfile> {
                     icon: Icon(Icons.edit_note),
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.only(top: 8),
-                  width: Get.width,
-                  height: Get.height * 0.05,
-                  child: ElevatedButton.icon(
-                    onPressed: () => Get.toNamed(AppRoutes.favorite),
-                    label: Text(
-                      "Favorites",
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    icon: Icon(Icons.favorite),
-                  ),
-                ),
+                // Container(
+                //   margin: const EdgeInsets.only(top: 8),
+                //   width: Get.width,
+                //   height: Get.height * 0.05,
+                //   child: ElevatedButton.icon(
+                //     onPressed: () => Get.toNamed(AppRoutes.favorite),
+                //     label: Text(
+                //       "Favorites",
+                //       style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                //         color: Colors.white,
+                //         fontWeight: FontWeight.bold,
+                //       ),
+                //     ),
+                //     icon: Icon(Icons.favorite),
+                //   ),
+                // ),
                 Container(
                   margin: const EdgeInsets.only(top: 8),
                   width: Get.width,
@@ -218,9 +218,10 @@ class _ViewProfileState extends State<ViewProfile> {
                     onPressed: () async {
                       String phoneNumber = "+8801321516025";
                       Uri whatsapp = Uri.parse("https://wa.me/$phoneNumber?text= ");
-                      await canLaunchUrl(whatsapp)
-                          ? launchUrl(whatsapp)
-                          : EasyLoading.showError("Something Went Wrong");
+                      await launchUrl(whatsapp);
+                      // await canLaunchUrl(whatsapp)
+                      //     ? launchUrl(whatsapp)
+                      //     : EasyLoading.showError("Something Went Wrong");
                     },
                     label: Text(
                       "Message Us",

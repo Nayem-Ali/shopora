@@ -177,7 +177,10 @@ class _AddProductsState extends State<AddProducts> {
                       discountPrice: double.tryParse(productDiscount.text.trim()) ?? 0,
                       category: productCategory.text.trim(),
                       stock: int.parse(productStock.text.trim()),
-                      description: productDescription.text.trim(),
+                      description:
+                          productDescription.text.trim().isEmpty
+                              ? "No description added"
+                              : productDescription.text,
                       thumbnail: urls?.first ?? "",
                     );
                     if (urls != null) {

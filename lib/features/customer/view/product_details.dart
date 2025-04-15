@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shopora/core/routes/routes.dart';
 import 'package:shopora/core/validations/validations.dart';
 import 'package:shopora/features/admin/controller/product_controller.dart';
 import 'package:shopora/features/admin/model/cart_model.dart';
@@ -139,7 +140,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               color: Theme.of(context).colorScheme.primaryContainer,
                               borderRadius: BorderRadius.circular(25),
                             ),
-                            child: Center(child: Text("${index+1}/${productImages.length}")),
+                            child: Center(child: Text("${index + 1}/${productImages.length}")),
                           ),
                         ),
                       ],
@@ -188,6 +189,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       );
                       if (isFavourite) {
                         await ProductController.removeFromFavourite(cart: cart);
+                        Get.offNamed(AppRoutes.customerHome);
                       } else {
                         await ProductController.addToFavourite(cart: cart);
                       }
@@ -207,6 +209,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       );
                       if (isCart) {
                         await ProductController.removeFromCart(cart: cart);
+                        Get.offNamed(AppRoutes.customerHome);
                       } else {
                         await ProductController.addToCart(cart: cart);
                       }
@@ -226,7 +229,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(widget.product.description ?? "No Description Given"),
+                    child: Text(widget.product.description),
                   ),
                 ],
               ),

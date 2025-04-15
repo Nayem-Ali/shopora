@@ -68,10 +68,10 @@ class FileHandling {
     return null;
   }
 
-  static Future<void> deleteProductImage({required String url}) async {
-    List<String> path = url.split("/");
-    await _supabase.storage.from("product-images").remove([
-      "${path[path.length - 2]}/${path[path.length - 1]}",
-    ]);
-  }
+  // static Future<void> deleteProductImage({required String url}) async {
+  //   List<String> path = url.split("/");
+  //   await _supabase.storage.from("product-images").remove([
+  //     "${path[path.length - 2]}/${path[path.length - 1]}",
+  //   ]);
+  // }
 }

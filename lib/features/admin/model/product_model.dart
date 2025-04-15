@@ -1,7 +1,7 @@
 class Product {
   final String id;
   String title;
-  String? description;
+  String description;
   double price;
   double? discountPrice;
   String category;
@@ -11,7 +11,7 @@ class Product {
   Product({
     required this.id,
     required this.title,
-    this.description,
+    required this.description,
     required this.price,
     this.discountPrice,
     required this.category,

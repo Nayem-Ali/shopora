@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shopora/features/customer/controller/profile_controller.dart';
 import 'package:shopora/features/customer/model/customer_model.dart';
 import 'package:shopora/features/customer/view/cart.dart';
+import 'package:shopora/features/customer/view/favourites.dart';
 import 'package:shopora/features/customer/view/view_profile.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -28,6 +29,7 @@ class _CustomerHomeState extends State<CustomerHome> {
     customer = await ProfileController.fetchUserData(userId: supabase.auth.currentUser!.id);
     pages.add(ExploreProduct());
     pages.add(ViewCart(customer: customer!));
+    pages.add(Favourites());
     pages.add(ViewProfile(customer: customer!));
     setState(() {});
   }
@@ -46,9 +48,11 @@ class _CustomerHomeState extends State<CustomerHome> {
           });
         },
         currentIndex: currentPageIndex,
+        type: BottomNavigationBarType.fixed,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: "Cart"),
+          BottomNavigationBarItem(icon: Icon(Icons.favorite), label: "Favourite"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
         ],
       ),

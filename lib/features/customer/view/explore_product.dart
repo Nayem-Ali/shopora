@@ -19,7 +19,7 @@ class _ExploreProductState extends State<ExploreProduct> {
       stream: ProductController.fetchAllProductsStream(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Data Coming");
+          return Center(child: CircularProgressIndicator());
         } else if (snapshot.hasData) {
           List<Product> products =
               (snapshot.data as List).map((e) => Product.fromJson(e)).toList();
@@ -43,7 +43,14 @@ class _ExploreProductState extends State<ExploreProduct> {
                           ),
                           child: Stack(
                             children: [
-                              CachedNetworkImage(imageUrl: product.thumbnail, fit: BoxFit.fill),
+                              SizedBox(
+                                height:140,
+                                width: double.maxFinite,
+                                child: CachedNetworkImage(
+                                  imageUrl: product.thumbnail,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
                               if (product.discountPrice != null || product.discountPrice != 0)
                                 Align(
                                   alignment: Alignment.topRight,
@@ -106,7 +113,7 @@ class _ExploreProductState extends State<ExploreProduct> {
             },
           );
         } else {
-          return Text("No Data Found");
+          return Text("No Products Found");
         }
       },
     );

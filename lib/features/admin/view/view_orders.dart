@@ -30,13 +30,15 @@ class _ViewOrdersState extends State<ViewOrders> {
               return Card(
                 child: ListTile(
                   onTap: ()=> Get.to(OrderDetails(order: order)),
-                  leading: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: CachedNetworkImage(
-                      imageUrl: order.customerPhoto,
-                      height: 60,
-                      width: 60,
-                      fit: BoxFit.fill,
+                  leading: SizedBox(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: CachedNetworkImage(
+                        imageUrl: order.customerPhoto,
+                        height: 60,
+                        width: 60,
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
                   title: Text("Order ID: ${order.id.split("-").last}"),

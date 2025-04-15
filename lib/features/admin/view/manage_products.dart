@@ -156,9 +156,9 @@ class _ManageProductsState extends State<ManageProducts> {
                               ),
                               InkWell(
                                 onLongPress: () async {
-                                  FileHandling.deleteProductImage(
-                                    url: productImages[index].imageUrl,
-                                  );
+                                  // FileHandling.deleteProductImage(
+                                  //   url: productImages[index].imageUrl,
+                                  // );
                                   ProductController.deleteProductImage(
                                     imageUrl: productImages[index].imageUrl,
                                   );
@@ -249,9 +249,11 @@ class _ManageProductsState extends State<ManageProducts> {
                       EasyLoading.show();
                       widget.product.title = productTitle.text.trim();
                       widget.product.category = productCategory.text.trim();
-                      widget.product.description = productDescription.text.trim();
                       widget.product.price = double.parse(productPrice.text.trim());
                       widget.product.stock = int.parse(productStock.text.trim());
+                      productDescription.text.trim().isEmpty
+                          ? "No description added"
+                          : productDescription.text;
                       widget.product.thumbnail =
                           productImages.isEmpty
                               ? newImages.first.imageUrl

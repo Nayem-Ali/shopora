@@ -105,6 +105,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                 imageUrl: item.thumbnail,
                                 height: 60,
                                 width: 60,
+                                fit: BoxFit.fill,
                               ),
                             ),
                             title: Text(item.title),

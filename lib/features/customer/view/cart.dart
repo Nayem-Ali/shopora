@@ -45,7 +45,7 @@ class _ViewCartState extends State<ViewCart> {
         List<String> favorites =
             (snapshot.data as List).map((e) => e['product_id'].toString()).toList();
         if (favorites.isEmpty) {
-          return Center(child: Text("No Favorite Product Found"));
+          return Center(child: Text("No Cart Product Found"));
         } else {
           return Column(
             children: [
@@ -72,9 +72,13 @@ class _ViewCartState extends State<ViewCart> {
                                   ),
                                   child: Stack(
                                     children: [
-                                      CachedNetworkImage(
-                                        imageUrl: product.thumbnail,
-                                        fit: BoxFit.fill,
+                                      SizedBox(
+                                        height:140,
+                                        width: double.maxFinite,
+                                        child: CachedNetworkImage(
+                                          imageUrl: product.thumbnail,
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
                                       if (product.discountPrice != null ||
                                           product.discountPrice != 0)
