@@ -102,7 +102,7 @@ class _ExploreProductState extends State<ExploreProduct> {
                                 child: Stack(
                                   children: [
                                     SizedBox(
-                                      height: 150,
+                                      height: 140,
                                       width: double.maxFinite,
                                       child: CachedNetworkImage(
                                         imageUrl: product.thumbnail,
