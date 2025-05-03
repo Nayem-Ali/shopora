@@ -17,35 +17,36 @@ class MyOrders extends StatefulWidget {
 class _MyOrdersState extends State<MyOrders> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(centerTitle: true, title: Text("Order History")),
-      body: StreamBuilder(
-        stream: OrderController.streamMyOrders(customerId: widget.customerId),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasData) {
-            List<Order> orders = (snapshot.data as List).map((e) => Order.fromJson(e)).toList();
-            return ListView.builder(
-              itemCount: orders.length,
-              itemBuilder: (context, index) {
-                Order order = orders[index];
-                return Card(
-                  child: ListTile(
-                    onTap: ()=> Get.to(OrderDetails(order: order)),
-                    title: Text("Order ID: ${order.id.split("-").last}"),
-                    subtitle: Text("Status: ${order.status}"),
-                    trailing: Text("${order.subTotal}"),
-                  ),
-                );
-              },
-            );
-          } else {
+    return StreamBuilder(
+      stream: OrderController.streamMyOrders(customerId: widget.customerId),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+        else if (snapshot.data != null) {
+          print(snapshot.data);
+          List<Order> orders = (snapshot.data as List).map((e) => Order.fromJson(e)).toList();
+          if(orders.isEmpty){
             return Center(child: Text("No order placed"));
           }
-        },
-      ),
+          return ListView.builder(
+            itemCount: orders.length,
+            itemBuilder: (context, index) {
+              Order order = orders[index];
+              return Card(
+                child: ListTile(
+                  onTap: ()=> Get.to(OrderDetails(order: order)),
+                  title: Text("Order ID: ${order.id.split("-").last}"),
+                  subtitle: Text("Status: ${order.status}"),
+                  trailing: Text("${order.subTotal}"),
+                ),
+              );
+            },
+          );
+        } else {
+          return Center(child: Text("No order placed"));
+        }
+      },
     );
   }
 }

@@ -211,6 +211,14 @@ class _ManageProductsState extends State<ManageProducts> {
                   prefixIcon: Icon(CupertinoIcons.money_dollar),
                   hintText: "Product Discount Price",
                   inputType: TextInputType.number,
+                  validator: (value) {
+                    double discount = double.tryParse(value!.trim()) ?? 0;
+                    double price = double.tryParse(productPrice.text) ?? 0;
+                    if(discount > price){
+                      return "Discount price exceed price limit";
+                    }
+                    return null;
+                  },
                 ),
                 KTextFormField(
                   controller: productStock,

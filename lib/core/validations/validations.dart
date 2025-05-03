@@ -52,12 +52,4 @@ class Validations {
     return null;
   }
 
-  static String? bioValidator(String? value) {
-    if (value!.trim().isEmpty) {
-      return "Cannot be empty";
-    } else if (value.length >= 150) {
-      return "Bio length must be in 150 characters";
-    }
-    return null;
-  }
 }
