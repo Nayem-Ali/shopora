@@ -28,7 +28,7 @@ class ProductCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   child: CachedNetworkImage(
                     imageUrl: product.thumbnail,
-                    fit: BoxFit.fill,
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
@@ -63,7 +63,7 @@ class ProductCard extends StatelessWidget {
             product.title,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).primaryColor,
+              // color: Theme.of(context).primaryColor,
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -71,7 +71,7 @@ class ProductCard extends StatelessWidget {
           SizedBox(height: 5),
           if (product.discountPrice == null && product.discountPrice == 0)
             Text(
-              "${product.price} TK Only",
+              "৳ ${product.price}",
               style: Theme.of(context).textTheme.labelMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 // color: Theme.of(context).primaryColor,
@@ -81,7 +81,7 @@ class ProductCard extends StatelessWidget {
             )
           else
             Text(
-              "${product.price - product.discountPrice!} TK Only",
+              "৳ ${product.price - product.discountPrice!}",
               style: Theme.of(context).textTheme.labelLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),

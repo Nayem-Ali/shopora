@@ -87,7 +87,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           borderRadius: BorderRadius.circular(10),
                           child: CachedNetworkImage(
                             imageUrl: productImages[index].imageUrl,
-                            fit: BoxFit.fill,
+                            fit: BoxFit.contain,
                             width: Get.width,
                           ),
                         ),
