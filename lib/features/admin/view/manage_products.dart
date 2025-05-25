@@ -37,6 +37,7 @@ class _ManageProductsState extends State<ManageProducts> {
   TextEditingController productPrice = TextEditingController();
   TextEditingController productDiscount = TextEditingController();
   TextEditingController productStock = TextEditingController();
+  TextEditingController productSold = TextEditingController();
 
   @override
   void initState() {
@@ -46,6 +47,7 @@ class _ManageProductsState extends State<ManageProducts> {
     productPrice.text = widget.product.price.toString();
     productDiscount.text = widget.product.discountPrice.toString();
     productStock.text = widget.product.stock.toString();
+    productSold.text = widget.product.sold.toString();
     super.initState();
   }
 
@@ -199,33 +201,57 @@ class _ManageProductsState extends State<ManageProducts> {
                   hintText: "Product Category",
                   validator: Validations.nonEmptyValidator,
                 ),
-                KTextFormField(
-                  controller: productPrice,
-                  prefixIcon: Icon(CupertinoIcons.money_dollar),
-                  hintText: "Product Price",
-                  validator: Validations.nonEmptyValidator,
-                  inputType: TextInputType.number,
+                Row(
+                  children: [
+                    Flexible(
+                      child: KTextFormField(
+                        controller: productPrice,
+                        prefixIcon: Icon(CupertinoIcons.money_dollar),
+                        hintText: "Product Price",
+                        validator: Validations.nonEmptyValidator,
+                        inputType: TextInputType.number,
+                      ),
+                    ),
+                    Flexible(
+                      child: KTextFormField(
+                        controller: productDiscount,
+                        prefixIcon: Icon(CupertinoIcons.money_dollar),
+                        hintText: "Product Discount Price",
+                        inputType: TextInputType.number,
+                        validator: (value) {
+                          double discount = double.tryParse(value!.trim()) ?? 0;
+                          double price = double.tryParse(productPrice.text) ?? 0;
+                          if (discount > price) {
+                            return "Discount price exceed price limit";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-                KTextFormField(
-                  controller: productDiscount,
-                  prefixIcon: Icon(CupertinoIcons.money_dollar),
-                  hintText: "Product Discount Price",
-                  inputType: TextInputType.number,
-                  validator: (value) {
-                    double discount = double.tryParse(value!.trim()) ?? 0;
-                    double price = double.tryParse(productPrice.text) ?? 0;
-                    if(discount > price){
-                      return "Discount price exceed price limit";
-                    }
-                    return null;
-                  },
-                ),
-                KTextFormField(
-                  controller: productStock,
-                  prefixIcon: Icon(CupertinoIcons.number_circle),
-                  hintText: "Product Stock",
-                  validator: Validations.nonEmptyValidator,
-                  inputType: TextInputType.number,
+
+                Row(
+                  children: [
+                    Flexible(
+                      child: KTextFormField(
+                        controller: productStock,
+                        prefixIcon: Icon(CupertinoIcons.number_circle),
+                        hintText: "Product Stock",
+                        validator: Validations.nonEmptyValidator,
+                        inputType: TextInputType.number,
+                      ),
+                    ),
+                    Flexible(
+                      child: KTextFormField(
+                        controller: productSold,
+                        prefixIcon: Icon(Icons.sell),
+                        hintText: "Product Sold",
+                        validator: Validations.nonEmptyValidator,
+                        inputType: TextInputType.number,
+                      ),
+                    ),
+                  ],
                 ),
                 KTextFormField(
                   controller: productDescription,
@@ -269,6 +295,8 @@ class _ManageProductsState extends State<ManageProducts> {
                       widget.product.discountPrice =
                           double.tryParse(productDiscount.text.trim()) ??
                           widget.product.discountPrice;
+                      widget.product.sold =
+                          int.tryParse(productSold.text.trim()) ?? widget.product.sold;
 
                       await Future.wait([
                         ProductController.updateProduct(product: widget.product),

@@ -19,7 +19,11 @@ class OrderController {
   }
 
   static streamMyOrders({required String customerId}) async* {
-    yield* _supabase.from("orders").stream(primaryKey: ['id']).eq("customer_id", customerId);
+    yield* _supabase
+        .from("orders")
+        .stream(primaryKey: ['id'])
+        .eq("customer_id", customerId)
+        .order('created_at', ascending: false);
   }
 
   static updateOrder({required Order order}) async {
@@ -60,5 +64,33 @@ class OrderController {
       print("Order Item Error $error");
       EasyLoading.showError(error.toString());
     }
+  }
+
+  //Future<List<Order>>
+  static Future<List<Order>> fetchOrdersWithItems() async {
+    final response = await _supabase
+        .from('orders')
+        .select('''
+        *,
+        order_items:order_items(*)
+      ''')
+        // .neq("status", 'Cancelled')
+        .order('created_at', ascending: false);
+    // print(response.first);
+    List<Order> orders = response.map((order) => Order.fromJson(order)).toList();
+    return orders;
+  }
+
+  static Future csvData() async {
+    final response = await _supabase
+        .from('orders')
+        .select('''
+        *,
+        order_items:order_items(*)
+      ''')
+        .neq("status", 'Cancelled')
+        .csv()
+        .order('created_at', ascending: false);
+    print("CSV $response");
   }
 }

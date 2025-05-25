@@ -63,6 +63,7 @@ class _CheckoutState extends State<Checkout> {
                           imageUrl: product.thumbnail,
                           height: 60,
                           width: 60,
+                          fit: BoxFit.fill,
                         ),
                       ),
                       title: Text(product.title),

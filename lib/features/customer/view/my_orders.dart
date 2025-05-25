@@ -38,7 +38,7 @@ class _MyOrdersState extends State<MyOrders> {
                   onTap: ()=> Get.to(OrderDetails(order: order)),
                   title: Text("Order ID: ${order.id.split("-").last}"),
                   subtitle: Text("Status: ${order.status}"),
-                  trailing: Text("${order.subTotal}"),
+                  trailing: Text("৳${order.subTotal}"),
                 ),
               );
             },

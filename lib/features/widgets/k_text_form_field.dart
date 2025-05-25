@@ -30,7 +30,7 @@ class KTextFormField extends StatelessWidget {
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           prefixIcon: prefixIcon,
-          hintText: hintText,
+          labelText: hintText,
         ),
       ),
     );

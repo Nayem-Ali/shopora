@@ -34,7 +34,7 @@ class _ViewProductsState extends State<ViewProducts> {
               crossAxisCount: 2, // 2 columns
               crossAxisSpacing: 8,
               mainAxisSpacing: 8,
-              childAspectRatio: 0.75,
+              childAspectRatio: 0.64,
             ),
             itemCount: products.length,
             itemBuilder: (context, index) {

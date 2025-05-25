@@ -9,6 +9,7 @@ class Order {
   String status;
   double subTotal;
   DateTime? orderDate;
+  List<OrderItem>? orderItems;
 
   Order({
     required this.id,
@@ -20,7 +21,8 @@ class Order {
     required this.transactionId,
     required this.status,
     required this.subTotal,
-    this.orderDate
+    this.orderDate,
+    this.orderItems,
   });
 
   factory Order.fromJson(Map<String, dynamic> json) {
@@ -34,7 +36,11 @@ class Order {
       transactionId: json['transaction_id'],
       status: json['status'],
       subTotal: json['sub_total'].toDouble(),
-      orderDate: DateTime.parse(json['created_at'])
+      orderDate: DateTime.parse(json['created_at']),
+      orderItems:
+          json['order_items'] != null
+              ? (json['order_items'] as List).map((i) => OrderItem.fromJson(i)).toList()
+              : null,
     );
   }
 
@@ -60,6 +66,7 @@ class OrderItem {
   int quantity;
   double price;
   String thumbnail;
+  DateTime? created_at;
 
   OrderItem({
     required this.id,
@@ -68,6 +75,7 @@ class OrderItem {
     required this.quantity,
     required this.price,
     required this.thumbnail,
+    this.created_at,
   });
 
   factory OrderItem.fromJson(Map<String, dynamic> json) {
@@ -78,6 +86,7 @@ class OrderItem {
       quantity: json['quantity'],
       price: json['price'] * 1.0,
       thumbnail: json['thumbnail'],
+      created_at: DateTime.tryParse(json['created_at'])
     );
   }
 

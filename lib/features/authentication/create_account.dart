@@ -127,6 +127,7 @@ class _CreateAccountState extends State<CreateAccount> {
                             address: address.text.trim(),
                             image_url: imageUrl ?? "",
                             contact: contact.text.trim(),
+                            order_status: true,
                           );
                           await ProfileController.addUserData(customer: customer);
                           Get.offAllNamed(AppRoutes.signIn);

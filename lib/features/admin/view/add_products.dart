@@ -151,7 +151,7 @@ class _AddProductsState extends State<AddProducts> {
                 validator: (value) {
                   double discount = double.tryParse(value!.trim()) ?? 0;
                   double price = double.tryParse(productPrice.text) ?? 0;
-                  if(discount > price){
+                  if (discount > price) {
                     return "Discount price exceed price limit";
                   }
                   return null;
@@ -190,6 +190,9 @@ class _AddProductsState extends State<AddProducts> {
                               ? "No description added"
                               : productDescription.text,
                       thumbnail: urls?.first ?? "",
+                      totalReview: 0,
+                      rating: 0,
+                      sold: 0,
                     );
                     if (urls != null) {
                       List<ProductImage> productImages =

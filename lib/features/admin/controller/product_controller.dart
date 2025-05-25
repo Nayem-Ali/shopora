@@ -16,7 +16,7 @@ class ProductController {
   }
 
   static fetchAllProductsStream() async* {
-    yield* _supabase.from('products').stream(primaryKey: ['id']);
+    yield* _supabase.from('products').stream(primaryKey: ['id']).order('created_at', ascending: false);
   }
 
   static Future<List<Product>> fetchAllProducts() async {
@@ -143,7 +143,7 @@ class ProductController {
   }
 
   static fetchFavoriteProducts({required String customerId}) async* {
-    yield* _supabase.from("favorites").stream(primaryKey: ['id']).eq("customer_id", customerId);
+    yield* _supabase.from("favorites").stream(primaryKey: ['id']).eq("customer_id", customerId).order('created_at', ascending: false);;
   }
 
   static Future<bool> removeFromFavourite({required Cart cart}) async {

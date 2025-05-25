@@ -206,6 +206,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.27"
+  flutter_rating_stars:
+    dependency: "direct main"
+    description:
+      name: flutter_rating_stars
+      sha256: "09dfa831aac2e5128fe70c5a8bd63ff4463180d5ff8545f7379c5b209d22ce1d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   flutter_spinkit:
     dependency: transitive
     description:
@@ -464,6 +472,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.1"
+  progress_tracker:
+    dependency: "direct main"
+    description:
+      name: progress_tracker
+      sha256: "37a45f3fb38743b4c7632c1e4d9c0e3c090b402983ea1665f0fdff17a6e228ae"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.16"
   realtime_client:
     dependency: transitive
     description:

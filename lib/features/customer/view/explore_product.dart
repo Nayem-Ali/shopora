@@ -44,7 +44,7 @@ class _ExploreProductState extends State<ExploreProduct> {
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.all(5),
+          margin: const EdgeInsets.all(2),
           height: 30,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
@@ -84,10 +84,10 @@ class _ExploreProductState extends State<ExploreProduct> {
                 products = productCategorization(products);
                 return GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, // 2 columns
+                    crossAxisCount: 2,
                     crossAxisSpacing: 8,
                     mainAxisSpacing: 8,
-                    childAspectRatio: 0.75,
+                    childAspectRatio: 0.5,
                   ),
                   itemCount: products.length,
                   itemBuilder: (context, index) {

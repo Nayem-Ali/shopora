@@ -1,11 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:get/get.dart';
 import 'package:shopora/core/routes/routes.dart';
 import 'package:shopora/core/validations/validations.dart';
 import 'package:shopora/features/admin/controller/product_controller.dart';
 import 'package:shopora/features/admin/model/cart_model.dart';
 import 'package:shopora/features/admin/model/product_model.dart';
+import 'package:shopora/features/customer/controller/profile_controller.dart';
+import 'package:shopora/features/customer/controller/review_controller.dart';
+import 'package:shopora/features/customer/model/customer_model.dart';
+import 'package:shopora/features/customer/model/reveiw_model.dart';
 import 'package:shopora/features/customer/view/customer_home.dart';
 import 'package:shopora/features/widgets/k_text_form_field.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -24,21 +29,31 @@ class _ProductDetailsState extends State<ProductDetails> {
   final SupabaseClient supabase = Supabase.instance.client;
   List<ProductImage> productImages = [];
   int index = 0;
-  TextEditingController review = TextEditingController();
+  TextEditingController reviewController = TextEditingController();
   bool isFavourite = false;
   bool isCart = false;
+  bool isReviewUpdate = false;
+  String updateReviewId = "";
+  Customer? customer;
+  double productRating = 1;
 
   TextStyle? textStyle(BuildContext context) {
-    return Theme.of(context).textTheme.titleLarge?.copyWith(
-      color: Theme.of(context).primaryColor,
+    return Theme.of(context).textTheme.titleMedium?.copyWith(
+      // color: Theme.of(context).primaryColor,
       fontWeight: FontWeight.bold,
     );
   }
 
   @override
   void initState() {
+    fetchProfile();
     checkData();
+
     super.initState();
+  }
+
+  fetchProfile() async {
+    customer = await ProfileController.fetchUserData(userId: supabase.auth.currentUser!.id);
   }
 
   checkData() async {
@@ -80,7 +95,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                   }
                   productImages = snapshot.data ?? [];
                   return SizedBox(
-                    height: Get.height * 0.5,
+                    height: Get.height * 0.4,
                     child: Stack(
                       children: [
                         ClipRRect(
@@ -151,31 +166,68 @@ class _ProductDetailsState extends State<ProductDetails> {
               ),
               Text(
                 widget.product.title,
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.bold,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-              Text(
-                "Price: ${widget.product.price} TK Only",
-                style: textStyle(context),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              if (widget.product.discountPrice != null && widget.product.discountPrice != 0)
+              if (widget.product.discountPrice == null || widget.product.discountPrice == 0)
                 Text(
-                  "Discount Price: ${widget.product.price - widget.product.discountPrice!} TK Only",
-                  style: textStyle(context),
+                  "৳ ${widget.product.price}",
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).primaryColor,
+                  ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
+                )
+              else
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: "৳${widget.product.price}",
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blueGrey,
+                          overflow: TextOverflow.ellipsis,
+                          decoration: TextDecoration.lineThrough,
+                          decorationThickness: 1.5,
+                        ),
+                      ),
+                      TextSpan(
+                        text: " ৳${widget.product.price - widget.product.discountPrice!}",
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      TextSpan(
+                        text: " Off ৳${widget.product.discountPrice!}",
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          // color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               Text(
                 "Stock remaining ${widget.product.stock}",
                 style: textStyle(context),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
+              ),
+              if(widget.product.totalReview != 0)
+              RatingStars(
+                value: widget.product.rating,
+                maxValue: 5,
+                starColor: Theme.of(context).primaryColor,
+                starOffColor: Colors.blueGrey,
               ),
               Divider(thickness: 2),
               Row(
@@ -234,29 +286,158 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                 ],
               ),
-              // ExpansionTile(
-              //   expandedAlignment: Alignment.topLeft,
-              //   title: Text("Product Review"),
-              //   children: [
-              //     Padding(
-              //       padding: const EdgeInsets.all(8.0),
-              //       child: Text(widget.product.description ?? "No Description Given"),
-              //     ),
-              //     Row(
-              //       children: [
-              //         Flexible(
-              //           child: KTextFormField(
-              //             controller: review,
-              //             prefixIcon: Icon(Icons.reviews),
-              //             hintText: "Write your review",
-              //             validator: Validations.nonEmptyValidator,
-              //           ),
-              //         ),
-              //         IconButton(onPressed: () {}, icon: Icon(Icons.send)),
-              //       ],
-              //     ),
-              //   ],
-              // ),
+              ExpansionTile(
+                expandedAlignment: Alignment.topLeft,
+                title: Text("Product Review"),
+                subtitle: Text("${widget.product.totalReview} review(s)"),
+                children: [
+                  RatingStars(
+                    value: productRating,
+                    maxValue: 5,
+                    valueLabelColor: Theme.of(context).primaryColor,
+                    starColor: Theme.of(context).primaryColor,
+                    starOffColor: Colors.blueGrey,
+                    onValueChanged: (value) {
+                      setState(() {
+                        productRating = value;
+                      });
+                    },
+                  ),
+                  Row(
+                    children: [
+                      Flexible(
+                        child: KTextFormField(
+                          controller: reviewController,
+                          prefixIcon: Icon(Icons.reviews),
+                          hintText: "Write your review",
+                          validator: Validations.nonEmptyValidator,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () async {
+                          Review review = Review(
+                            id: const Uuid().v4(),
+                            customerId: customer!.id,
+                            customerName: customer!.name,
+                            customerImage: customer!.image_url,
+                            productId: widget.product.id,
+                            review: reviewController.text.trim(),
+                            rating: productRating,
+                          );
+                          if (isReviewUpdate) {
+                            review.id = updateReviewId;
+                            await ReviewController.updateReview(review: review);
+                            isReviewUpdate = false;
+                          } else {
+                            await ReviewController.createReview(review: review);
+                            await ProductController.updateProduct(product: widget.product);
+                          }
+                          List<double> data = await ReviewController.getAverageRating(
+                            productId: widget.product.id,
+                          );
+                          widget.product.rating = data.first;
+                          widget.product.totalReview = data.last.toInt();
+                          await ProductController.updateProduct(product: widget.product);
+                          reviewController.clear();
+                          productRating = 1;
+                          setState(() {});
+                        },
+                        icon: Icon(Icons.send),
+                      ),
+                    ],
+                  ),
+                  StreamBuilder(
+                    stream: ReviewController.streamProductReviews(widget.product.id),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasData) {
+                        List<Review> reviews =
+                            (snapshot.data as List).map((e) => Review.fromJson(e)).toList();
+                        if (reviews.isEmpty) {
+                          return Center(child: Text("No Reviews Found"));
+                        }
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: reviews.length,
+                          itemBuilder: (context, index) {
+                            Review review = reviews[index];
+                            return Card(
+                              child: ListTile(
+                                leading: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: CachedNetworkImage(
+                                    imageUrl: review.customerImage,
+                                    height: 50,
+                                    width: 50,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
+                                title: Text("${review.customerName} (${review.rating})"),
+                                subtitle: Text(review.review),
+                                trailing:
+                                    review.customerId == customer!.id
+                                        ? Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            IconButton(
+                                              onPressed: () {
+                                                productRating = review.rating;
+                                                reviewController.text = review.review;
+                                                isReviewUpdate = true;
+                                                updateReviewId = review.id;
+                                                setState(() {});
+                                              },
+                                              icon: Icon(Icons.edit_note),
+                                            ),
+                                            IconButton(
+                                              onPressed: () {
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return AlertDialog(
+                                                      title: Text(
+                                                        "Are you sure to delete this review",
+                                                      ),
+                                                      actions: [
+                                                        ElevatedButton(
+                                                          onPressed: () async {
+                                                            await ReviewController.deleteReview(
+                                                              review: review,
+                                                            );
+                                                            Get.back();
+                                                            setState(() {});
+                                                          },
+                                                          child: Text("Confirm"),
+                                                        ),
+                                                        TextButton(
+                                                          onPressed: () {
+                                                            Get.back();
+                                                          },
+                                                          child: Text("Cancel"),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                              icon: Icon(Icons.delete),
+                                            ),
+                                          ],
+                                        )
+                                        : SizedBox.shrink(),
+                              ),
+                            );
+                          },
+                        );
+                      } else {
+                        return Center(child: Text("No Reviews Found"));
+                      }
+                    },
+                  ),
+                ],
+              ),
             ],
           ),
         ),

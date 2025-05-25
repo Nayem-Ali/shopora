@@ -105,82 +105,82 @@ class AppTheme{
       primaryIconTheme: IconThemeData(
         color: Colors.black,
       ),
-      textTheme: GoogleFonts.aBeeZeeTextTheme().copyWith(
-        bodyLarge: GoogleFonts.aBeeZee(
-          fontSize: 16,
-          fontWeight: FontWeight.w400,
-          color: const Color(0xFF191C20),
-        ),
-        bodyMedium: GoogleFonts.aBeeZee(
-          fontSize: 14,
-          fontWeight: FontWeight.w400,
-          color: const Color(0xFF191C20),
-        ),
-        bodySmall: GoogleFonts.aBeeZee(
-          fontSize: 12,
-          fontWeight: FontWeight.w400,
-          color: const Color(0xFF191C20),
-        ),
-        titleLarge: GoogleFonts.aBeeZee(
-          fontSize: 20,
-          fontWeight: FontWeight.w500,
-          color: const Color(0xFF191C20),
-        ),
-        titleMedium: GoogleFonts.aBeeZee(
-          fontSize: 16,
-          fontWeight: FontWeight.w400,
-          color: const Color(0xFF191C20),
-        ),
-        titleSmall: GoogleFonts.aBeeZee(
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-          color: const Color(0xFF191C20),
-        ),
-        headlineLarge: GoogleFonts.aBeeZee(
-          fontSize: 40,
-          fontWeight: FontWeight.w400,
-          color: const Color(0xFF191C20),
-        ),
-        headlineMedium: GoogleFonts.aBeeZee(
-          fontSize: 34,
-          fontWeight: FontWeight.w400,
-          color: const Color(0xFF191C20),
-        ),
-        headlineSmall: GoogleFonts.aBeeZee(
-          fontSize: 24,
-          fontWeight: FontWeight.w400,
-          color: const Color(0xFF191C20),
-        ),
-        labelLarge: GoogleFonts.aBeeZee(
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-          color: const Color(0xFF191C20),
-        ),
-        labelMedium: GoogleFonts.aBeeZee(
-          fontSize: 11,
-          fontWeight: FontWeight.w400,
-          color: const Color(0xFF191C20),
-        ),
-        labelSmall: GoogleFonts.aBeeZee(
-          fontSize: 10,
-          fontWeight: FontWeight.w400,
-          color: const Color(0xFF191C20),
-        ),
-        displayLarge: GoogleFonts.aBeeZee(
-          fontSize: 96,
-          fontWeight: FontWeight.w300,
-          color: const Color(0xFF191C20),
-        ),
-        displayMedium: GoogleFonts.aBeeZee(
-          fontSize: 60,
-          fontWeight: FontWeight.w300,
-          color: const Color(0xFF191C20),
-        ),
-        displaySmall: GoogleFonts.aBeeZee(
-          fontSize: 48,
-          fontWeight: FontWeight.w400,
-          color: const Color(0xFF191C20),
-        ),
+      textTheme: GoogleFonts.abyssinicaSilTextTheme().copyWith(
+        // bodyLarge: GoogleFonts.afacad(
+        //   fontSize: 16,
+        //   fontWeight: FontWeight.w400,
+        //   color: const Color(0xFF191C20),
+        // ),
+        // bodyMedium: GoogleFonts.afacad(
+        //   fontSize: 14,
+        //   fontWeight: FontWeight.w400,
+        //   color: const Color(0xFF191C20),
+        // ),
+        // bodySmall: GoogleFonts.afacad(
+        //   fontSize: 12,
+        //   fontWeight: FontWeight.w400,
+        //   color: const Color(0xFF191C20),
+        // ),
+        // titleLarge: GoogleFonts.afacad(
+        //   fontSize: 20,
+        //   fontWeight: FontWeight.w500,
+        //   color: const Color(0xFF191C20),
+        // ),
+        // titleMedium: GoogleFonts.afacad(
+        //   fontSize: 16,
+        //   fontWeight: FontWeight.w400,
+        //   color: const Color(0xFF191C20),
+        // ),
+        // titleSmall: GoogleFonts.afacad(
+        //   fontSize: 14,
+        //   fontWeight: FontWeight.w500,
+        //   color: const Color(0xFF191C20),
+        // ),
+        // headlineLarge: GoogleFonts.afacad(
+        //   fontSize: 40,
+        //   fontWeight: FontWeight.w400,
+        //   color: const Color(0xFF191C20),
+        // ),
+        // headlineMedium: GoogleFonts.afacad(
+        //   fontSize: 34,
+        //   fontWeight: FontWeight.w400,
+        //   color: const Color(0xFF191C20),
+        // ),
+        // headlineSmall: GoogleFonts.afacad(
+        //   fontSize: 24,
+        //   fontWeight: FontWeight.w400,
+        //   color: const Color(0xFF191C20),
+        // ),
+        // labelLarge: GoogleFonts.afacad(
+        //   fontSize: 14,
+        //   fontWeight: FontWeight.w500,
+        //   color: const Color(0xFF191C20),
+        // ),
+        // labelMedium: GoogleFonts.afacad(
+        //   fontSize: 11,
+        //   fontWeight: FontWeight.w400,
+        //   color: const Color(0xFF191C20),
+        // ),
+        // labelSmall: GoogleFonts.afacad(
+        //   fontSize: 10,
+        //   fontWeight: FontWeight.w400,
+        //   color: const Color(0xFF191C20),
+        // ),
+        // displayLarge: GoogleFonts.afacad(
+        //   fontSize: 96,
+        //   fontWeight: FontWeight.w300,
+        //   color: const Color(0xFF191C20),
+        // ),
+        // displayMedium: GoogleFonts.afacad(
+        //   fontSize: 60,
+        //   fontWeight: FontWeight.w300,
+        //   color: const Color(0xFF191C20),
+        // ),
+        // displaySmall: GoogleFonts.afacad(
+        //   fontSize: 48,
+        //   fontWeight: FontWeight.w400,
+        //   color: const Color(0xFF191C20),
+        // ),
       ),
       scaffoldBackgroundColor: const Color(0xFFFFF8F6),
       secondaryHeaderColor: const Color(0xFFE3F2FD),

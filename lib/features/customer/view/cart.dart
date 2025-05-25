@@ -35,6 +35,16 @@ class _ViewCartState extends State<ViewCart> {
     setState(() {});
   }
 
+  filterCartProducts(List<String> cartsProduct) {
+    List<Product> cartsProducts = [];
+    for (Product product in products) {
+      if (cartsProduct.contains(product.id)) {
+        cartsProducts.add(product);
+      }
+    }
+    products = List.from(cartsProducts);
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -43,9 +53,11 @@ class _ViewCartState extends State<ViewCart> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
         }
-        List<String> favorites =
+        List<String> carts =
             (snapshot.data as List).map((e) => e['product_id'].toString()).toList();
-        if (favorites.isEmpty) {
+        filterCartProducts(carts);
+        print(products.length);
+        if (products.isEmpty) {
           return Center(child: Text("No Cart Product Found"));
         } else {
           return Column(
@@ -56,30 +68,26 @@ class _ViewCartState extends State<ViewCart> {
                     crossAxisCount: 2, // 2 columns
                     crossAxisSpacing: 8,
                     mainAxisSpacing: 8,
-                    childAspectRatio: 0.75,
+                    childAspectRatio: 0.5,
                   ),
                   itemCount: products.length,
                   itemBuilder: (context, index) {
                     Product product = products[index];
-                    if (favorites.contains(product.id)) {
-                      cartProducts.add(product);
-                      return InkWell(
-                        onTap: () => Get.to(ProductDetails(product: product)),
-                        child: ProductCard(product: product),
-                      );
-                    }
+                    return InkWell(
+                      onTap: () => Get.to(ProductDetails(product: product)),
+                      child: ProductCard(product: product),
+                    );
                   },
                 ),
               ),
               KElevatedButton(
-                onPressed: () {
-                  Get.to(
-                    Checkout(
-                      cartProducts: cartProducts.toSet().toList(),
-                      customer: widget.customer,
+                onPressed:
+                    () => Get.to(
+                      Checkout(
+                        cartProducts: products,
+                        customer: widget.customer,
+                      ),
                     ),
-                  );
-                },
                 text: "Checkout",
               ),
             ],

@@ -35,4 +35,20 @@ class ProfileController {
     }
     return null;
   }
+
+  static Future banCustomerFromOrdering({required bool status, required String id}) async {
+   try{
+     await _supabase.from('customer').update({'order_status': status}).eq('id', id);
+     EasyLoading.showSuccess("Customer blocked");
+   } catch(e){
+     print("Blocking customer error: $e");
+   }
+  }
+
+  static streamBannedCustomer() async* {
+    yield* _supabase
+        .from("customer")
+        .stream(primaryKey: ['id'])
+        .eq("order_status", false);
+  }
 }
